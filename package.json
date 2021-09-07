@@ -1,0 +1,63 @@
+{
+  "name": "smart-house-itwin-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@bentley/bentleyjs-core": "^2.19.9",
+    "@bentley/frontend-application-insights-client": "^2.19.9",
+    "@bentley/frontend-authorization-client": "^2.19.9",
+    "@bentley/geometry-core": "^2.19.9",
+    "@bentley/icons-generic": "^1.0.34",
+    "@bentley/imodelhub-client": "^2.19.9",
+    "@bentley/imodeljs-common": "^2.19.9",
+    "@bentley/imodeljs-frontend": "^2.19.9",
+    "@bentley/imodeljs-i18n": "^2.19.9",
+    "@bentley/imodeljs-markup": "^2.19.9",
+    "@bentley/imodeljs-quantity": "^2.19.9",
+    "@bentley/itwin-client": "^2.19.9",
+    "@bentley/orbitgt-core": "^2.19.9",
+    "@bentley/presentation-common": "^2.19.9",
+    "@bentley/presentation-frontend": "^2.19.9",
+    "@bentley/product-settings-client": "^2.19.9",
+    "@bentley/rbac-client": "^2.19.9",
+    "@bentley/react-scripts": "^4.0.3",
+    "@bentley/telemetry-client": "^2.19.9",
+    "@bentley/ui-abstract": "^2.19.9",
+    "@bentley/ui-components": "^2.19.9",
+    "@bentley/ui-core": "^2.19.9",
+    "@bentley/ui-framework": "^2.19.9",
+    "@bentley/ui-ninezone": "^2.19.9",
+    "@bentley/webgl-compatibility": "^2.19.9",
+    "@itwin/web-viewer-react": "^1.1.6",
+    "@types/history": "^4.7.9",
+    "@types/node": "^14.17.15",
+    "@types/react": "^16.14.15",
+    "@types/react-dom": "^16.9.14",
+    "history": "^4.10.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "start": "react-scripts --max_old_space_size=4096 start",
+    "build": "react-scripts --max_old_space_size=4096 build",
+    "test": "react-scripts --max_old_space_size=4096 test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": [
+    "last 4 chrome version",
+    "last 4 firefox version",
+    "last 4 safari version",
+    "last 4 ios version",
+    "last 4 ChromeAndroid version",
+    "last 4 edge version",
+    "not dead",
+    "not <0.2%"
+  ]
+}
