@@ -18,15 +18,7 @@ import React, { useEffect, useState } from "react";
 
 import { Header } from "./Header";
 import { history } from "./history";
-// import { Console } from "console";
-import { DisplayStyleSettingsProps } from "@bentley/imodeljs-common";
-import { Visualization } from "./Visualization";
-import { SmartDeviceAPI } from "./SmartDeviceAPI";
-import { SmartDeviceDecorator } from "./components/decoraters/SmartDeviceDecorator";
-import { SmartDeviceUiItemsProvider } from "./providers/SmartDeviceUiItemsProvider";
-import { ViewAttributesWidgetProvider } from "./ViewAttributesWidget";
-
-
+import { Console } from "console";
 
 const App: React.FC = () => {
   const [isAuthorized, setIsAuthorized] = useState(
@@ -152,22 +144,56 @@ const App: React.FC = () => {
   };
 
   const onIModelConnected = (_imodel: IModelConnection) => {
- 
+    console.log("Hi Bao ... It´s solved now … ! it was about missed yellow brackets!");
+
     IModelApp.viewManager.onViewOpen.addOnce (async (vp: ScreenViewport) => {
 
-      const viewStyle: DisplayStyleSettingsProps = {
-        viewflags: {
-          // visEdges: false,
-          // shadows: true
-          visEdges: false
-        }
-      }
+      // this statements (1 - part 1) is working fine !!! JJ 210913-14:39
+      const categoriesToHide: string[] = [
+      "'Wall 2nd'",
+      "'Wall 1st'",
+      "'Dry Wall 2nd'",
+      "'Dry Wall 1st'",
+      "'Brick Exterior'",
+      "'WINDOWS 1ST'",
+      "'WINDOWS 2ND'",
+      "'Ceiling 1st'",
+      "'Ceiling 2nd'",
+      "'Callouts'",
+      "'light fixture'",
+      "'Roof'",
+      ];
 
-      vp.overrideDisplayStyle(viewStyle);
+      // const categoriesToHide2 = ["'Wall 2nd'", "'Wall 1st'", "'Dry Wall 2nd'", "'Dry Wall 1st'", "'Brick Exterior'", "'WINDOWS 1ST'", "'WINDOWS 2ND'", "'Ceiling 1st'", "'Ceiling 2nd'", "'Callouts'", "'light fixture'", "'Roof'"];
 
-      console.log(await SmartDeviceAPI.getData());
-      Visualization.hideHouseExterior(vp);
-      IModelApp.viewManager.addDecorator(new SmartDeviceDecorator(vp));
+
+      // this statement (2A) doesn’t work too
+      // const categoriesToHide: string[] = ["'Wall 2nd'","'Wall 1st'","'Dry Wall 2nd'","'Dry Wall 1st'","'Brick Exterior'","'WINDOWS 1ST'","'WINDOWS 2ND'","'Ceiling 1st'","'Ceiling 2nd'","'Callouts'","'light fixture'","'Roof'"]
+      // const categoriesToHide: string[] = ["'Wall 2nd'"];
+
+      // this statement (2B) is working fine !!! JJ 210913-14:39
+      const query = `SELECT ecinstanceid from Biscore.category
+       WHERE codevalue IN (${categoriesToHide.toString()})`;
+
+      // this statements (1 - part 2) doesn’t work
+      // const query = `SELECT ECInstanceId FROM BisCore.Category WHERE codeValue IN (${categoriesToHide.toString})`;
+
+      // this statements (1) and (2) work, so I have replaced the query line with this (3) instead:
+      // const query  = `SELECT ecinstanceid from Biscore.category WHERE codevalue IN ('Wall 2nd','Wall 1st','Dry Wall 2nd','Dry Wall 1st','Brick Exterior','WINDOWS 1ST','WINDOWS 2ND','Ceiling 1st','Ceiling 2nd','Callouts','light fixture','Roof')`
+
+
+
+      
+      const result = _imodel.query(query);
+      const categoryIds = [];
+      
+
+      for await (const row of result)
+        // console.log(row);
+        categoryIds.push(row.id);
+
+        console.log(categoryIds);
+        vp.changeCategoryDisplay(categoryIds, false);
     });
   }
 
@@ -181,8 +207,6 @@ const App: React.FC = () => {
       {isLoggingIn ? (
         <span>"Právě probíhá proces Logování .... už jen chvíli :-)"</span>
         ) : (
-          // <div>
-          //   <span>"Právě proběhlo úspěšné Logování .... jsi v iTwin Vieweru:-)"</span>
         <Viewer
           contextId={contextId}
           iModelId={iModelId}
@@ -190,9 +214,7 @@ const App: React.FC = () => {
           onIModelAppInit={onIModelAppInit}
           viewCreatorOptions={{ viewportConfigurer: viewConfiguration }}
           onIModelConnected={onIModelConnected}
-          uiProviders={[new SmartDeviceUiItemsProvider(), new ViewAttributesWidgetProvider()]}
         />
-        // </div>
       )}
     </div>
   );

@@ -18,13 +18,11 @@ import React, { useEffect, useState } from "react";
 
 import { Header } from "./Header";
 import { history } from "./history";
-// import { Console } from "console";
+import { Console } from "console";
 import { DisplayStyleSettingsProps } from "@bentley/imodeljs-common";
 import { Visualization } from "./Visualization";
 import { SmartDeviceAPI } from "./SmartDeviceAPI";
 import { SmartDeviceDecorator } from "./components/decoraters/SmartDeviceDecorator";
-import { SmartDeviceUiItemsProvider } from "./providers/SmartDeviceUiItemsProvider";
-import { ViewAttributesWidgetProvider } from "./ViewAttributesWidget";
 
 
 
@@ -157,9 +155,9 @@ const App: React.FC = () => {
 
       const viewStyle: DisplayStyleSettingsProps = {
         viewflags: {
-          // visEdges: false,
-          // shadows: true
-          visEdges: false
+          visEdges: false,
+          shadows: true
+          // visEdges: false
         }
       }
 
@@ -182,7 +180,7 @@ const App: React.FC = () => {
         <span>"Právě probíhá proces Logování .... už jen chvíli :-)"</span>
         ) : (
           // <div>
-          //   <span>"Právě proběhlo úspěšné Logování .... jsi v iTwin Vieweru:-)"</span>
+          //   <span>"Právě proběhlo úspěšné Logování .... jsi v SUDOP iTwin Vieweru:-)"</span>
         <Viewer
           contextId={contextId}
           iModelId={iModelId}
@@ -190,7 +188,6 @@ const App: React.FC = () => {
           onIModelAppInit={onIModelAppInit}
           viewCreatorOptions={{ viewportConfigurer: viewConfiguration }}
           onIModelConnected={onIModelConnected}
-          uiProviders={[new SmartDeviceUiItemsProvider(), new ViewAttributesWidgetProvider()]}
         />
         // </div>
       )}
