@@ -2,6 +2,7 @@ import { IModelApp } from "@itwin/core-frontend";
 import { UiItemsProvider, ToolbarUsage, ToolbarOrientation, CommonToolbarItem, StageUsage, ToolbarItemUtilities, StagePanelLocation, StagePanelSection, AbstractWidgetProps } from "@itwin/appui-abstract";
 import { Visualization } from "../Visualization";
 import { SmartDeviceListWidgetComponent } from "../components/widgets/SmartDeviceListWidgetComponent";
+import * as React from "react";
 
 
 export class SmartDeviceUiItemsProvider implements UiItemsProvider {
