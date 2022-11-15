@@ -32,6 +32,7 @@ import {
 } from "@itwin/web-viewer-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
+import { Header } from "./Header";
 import { history } from "./history";
 // 
 // 
@@ -191,5 +192,30 @@ const App: React.FC = () => {
       />
     </div>
   );
+
+  // return (
+  //   <div className="viewer-container">
+  //     <Header
+  //       loggedIn={!!accessToken}
+  //       handleLogin={onLoginClick}
+  //       handleLogout={onLogoutClick}
+  //     />
+  //     {isLoggingIn ? (
+  //       <span>"Logging in...."</span>
+  //     ) : (
+  //       <Viewer
+  //         iTwinId={iTwinId}
+  //         iModelId={iModelId}
+  //         authClient={authClient}
+  //         viewCreatorOptions={viewCreatorOptions}
+  //         enablePerformanceMonitors={true} // see description in the README (https://www.npmjs.com/package/@itwin/desktop-viewer-react)
+  //         onIModelConnected={onIModelConnected}
+  //         uiProviders={[new SmartDeviceUiItemsProvider()]}
+  //       />
+  //     )}
+  //   </div>
+  // );
+
+
 };
 export default App;

@@ -118,7 +118,8 @@ export class ViewAttributesApi {
         break;
       case ViewFlag.BackgroundMap:
         // vp.viewFlags.backgroundMap = on;
-        vp.viewFlags = vp.viewFlags.copy({ backgroundMap: true });
+        // vp.viewFlags = vp.viewFlags.copy({ backgroundMap: true });
+        vp.viewFlags = vp.viewFlags.with("backgroundMap", true);
         break;
       case ViewFlag.Grid:
         // vp.viewFlags.grid = on;
