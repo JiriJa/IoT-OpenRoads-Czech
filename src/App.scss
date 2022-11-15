@@ -3,9 +3,23 @@
 * See LICENSE.md in the project root for license terms and full copyright notice.
 *--------------------------------------------------------------------------------------------*/
 .viewer-container {
-  height: 100vh;
+  height: calc(100vh - 50px);
+}
 
-  .signin-content {
-    width: 400px;
+.smart-table {
+  font-size: 12px;
+  size: 100%;
+
+  >tbody {
+    >tr:not(:first-child):hover{
+      background-color: skyblue;
+      cursor: pointer;
+    }
+  }
+
+  > td, th {
+    border: 3px solid rgb(12, 146, 224);
+    text-align: left;
+    padding: 8px;
   }
 }

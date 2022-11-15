@@ -1,0 +1,24 @@
+import { XAndY, XYAndZ } from "@bentley/geometry-core";
+import { Marker } from "@itwin/core-frontend";
+
+export class SmartDeviceMarker extends Marker {
+    private _smartDeviceId: string;
+    private _smartDeviceType: string;
+
+    // static htmlElement: HTMLDivElement;
+
+    constructor(location: XYAndZ, size: XAndY, smartDeviceId: string, smartDeviceType: string) {
+        super(location, size);
+    
+        this._smartDeviceId = smartDeviceId;
+        this._smartDeviceType = smartDeviceType;
+        
+        
+        const htmlElement = document.createElement("div");
+        htmlElement.innerHTML = `
+            <h2>${this._smartDeviceId}</h2>
+        `
+
+        this.htmlElement = htmlElement;
+    }
+}

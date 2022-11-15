@@ -8,31 +8,49 @@ import "./App.scss";
 import { BrowserAuthorizationClient } from "@itwin/browser-authorization";
 import type { ScreenViewport } from "@itwin/core-frontend";
 import { FitViewTool, IModelApp, StandardViewId } from "@itwin/core-frontend";
+import { IModelConnection } from "@itwin/core-frontend";
 import { FillCentered } from "@itwin/core-react";
 import { ProgressLinear } from "@itwin/itwinui-react";
 import {
-  MeasureTools,
-  MeasureToolsUiItemsProvider,
+//   MeasureTools,
+//   MeasureToolsUiItemsProvider,
 } from "@itwin/measure-tools-react";
 import {
-  PropertyGridManager,
-  PropertyGridUiItemsProvider,
+//   PropertyGridManager,
+//   PropertyGridUiItemsProvider,
 } from "@itwin/property-grid-react";
 import {
-  TreeWidget,
-  TreeWidgetUiItemsProvider,
+//   TreeWidget,
+//   TreeWidgetUiItemsProvider,
 } from "@itwin/tree-widget-react";
 import {
   useAccessToken,
   Viewer,
-  ViewerContentToolsProvider,
-  ViewerNavigationToolsProvider,
-  ViewerPerformance,
-  ViewerStatusbarItemsProvider,
+  // ViewerContentToolsProvider,
+  // ViewerNavigationToolsProvider,
+  // ViewerPerformance,
+  // ViewerStatusbarItemsProvider,
 } from "@itwin/web-viewer-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import { history } from "./history";
+// 
+// 
+// 
+
+import { DisplayStyleSettingsProps } from "@itwin/core-common";
+import { Visualization } from "./Visualization";
+import { SmartDeviceAPI } from "./SmartDeviceAPI";
+import { SmartDeviceDecorator } from "./components/decoraters/SmartDeviceDecorator";
+import { SmartDeviceUiItemsProvider } from "./providers/SmartDeviceUiItemsProvider";
+import { ViewAttributesWidgetProvider } from "./ViewAttributesWidget";
+
+
+
+// 
+// 
+// 
+
 
 const App: React.FC = () => {
   const [iModelId, setIModelId] = useState(process.env.IMJS_IMODEL_ID);
@@ -108,12 +126,6 @@ const App: React.FC = () => {
         const start = new Date();
         const intvl = setInterval(() => {
           if (viewPort.areAllTileTreesLoaded) {
-            ViewerPerformance.addMark("TilesLoaded");
-            void ViewerPerformance.addMeasure(
-              "TileTreesLoaded",
-              "ViewerStarting",
-              "TilesLoaded"
-            );
             clearInterval(intvl);
             resolve(true);
           }
@@ -137,11 +149,28 @@ const App: React.FC = () => {
     [viewConfiguration]
   );
 
-  const onIModelAppInit = useCallback(async () => {
-    await TreeWidget.initialize();
-    await PropertyGridManager.initialize();
-    await MeasureTools.startup();
-  }, []);
+  const onIModelConnected = (_imodel: IModelConnection) => {
+ 
+    IModelApp.viewManager.onViewOpen.addOnce (async (vp: ScreenViewport) => {
+
+      const viewStyle: DisplayStyleSettingsProps = {
+        viewflags: {
+          // visEdges: false,
+          // shadows: true
+          visEdges: false
+        }
+      }
+
+      vp.overrideDisplayStyle(viewStyle);
+
+      console.log(await SmartDeviceAPI.getData());
+      Visualization.hideHouseExterior(vp);
+      IModelApp.viewManager.addDecorator(new SmartDeviceDecorator(vp));
+    });
+  }
+
+
+
 
   return (
     <div className="viewer-container">
@@ -157,25 +186,11 @@ const App: React.FC = () => {
         iModelId={iModelId ?? ""}
         authClient={authClient}
         viewCreatorOptions={viewCreatorOptions}
-        enablePerformanceMonitors={true} // see description in the README (https://www.npmjs.com/package/@itwin/web-viewer-react)
-        onIModelAppInit={onIModelAppInit}
-        uiProviders={[
-          new ViewerNavigationToolsProvider(),
-          new ViewerContentToolsProvider({
-            vertical: {
-              measureGroup: false,
-            },
-          }),
-          new ViewerStatusbarItemsProvider(),
-          new TreeWidgetUiItemsProvider(),
-          new PropertyGridUiItemsProvider({
-            enableCopyingPropertyText: true,
-          }),
-          new MeasureToolsUiItemsProvider(),
-        ]}
+        onIModelConnected={onIModelConnected}
+        uiProviders={[new SmartDeviceUiItemsProvider(), new ViewAttributesWidgetProvider()]}
+        enablePerformanceMonitors={true} // see description in the README (https://www.npmjs.com/package/@itwin/desktop-viewer-react)
       />
     </div>
   );
 };
-
 export default App;
