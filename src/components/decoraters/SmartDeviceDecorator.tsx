@@ -45,7 +45,7 @@ export class SmartDeviceDecorator implements Decorator {
         values.forEach(value => {
             const smartDeviceMarker = new SmartDeviceMarker(
                 { x: value.origin.x, y: value.origin.y, z: value.origin.z },
-                { x: 55, y: 55 },
+                { x: 25, y: 25 },
                 value.smartDeviceId,
                 value.smartDeviceType,
                 cloudData[value.smartDeviceId],
