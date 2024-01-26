@@ -20,13 +20,13 @@
 
   >tbody {
     >tr:not(:first-child):hover{
-      background-color: skyblue;
+      background-color: rgb(135, 230, 235);
       cursor: pointer;
     }
   }
 
   > td, th {
-    border: 3px solid rgb(12, 146, 224);
+    border: 3px solid rgb(220, 12, 224);
     text-align: left;
     padding: 8px;
   }
