@@ -19,7 +19,7 @@ export class SmartDeviceUiItemsProvider implements UiItemsProvider {
                 1000,
                 // "icon-element",
                 "icon-ec-schema",
-                "PŘEDNASTAVENÉ zobrazení SÚSPK",
+                "PŘEDNASTAVENÉ zobrazení Hlavní město Praha",
                 () => {
                     
                     this._toogleWalls = !this._toogleWalls;
@@ -43,7 +43,7 @@ export class SmartDeviceUiItemsProvider implements UiItemsProvider {
 
             const widget: AbstractWidgetProps = {          
                 id: "smartDeviceListWidget",
-                label: "SÚSPK Pardubice",
+                label: "DP Praha",
                 getWidgetContent: () => {
                     // return "Hello"
                     return <SmartDeviceListWidgetComponent></SmartDeviceListWidgetComponent>

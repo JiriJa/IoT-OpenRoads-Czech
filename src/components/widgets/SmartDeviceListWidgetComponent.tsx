@@ -31,8 +31,8 @@ export function SmartDeviceListWidgetComponent() {
                 <tr>
                     {/* <th>SmartDeviceType</th>
                     <th>SmartDeviceId</th> */}
-                    <th>Typ zařízení SÚSPK</th>
-                    <th>Číslo zařízení SÚSPK</th>
+                    <th>Typ zařízení Metro-D DPHMP</th>
+                    <th>Číslo zařízení Metro-D DPHMP</th>
                 </tr>
             {smartTableList}
             </tbody>
